@@ -1,9 +1,19 @@
+这是一个修复了格式问题的完整 `README.md` 代码。
+
+**修复重点：**
+
+1. **修复格式错乱**：确保了“文件结构”的代码块正确闭合，与下面的“安装与运行”部分有清晰的空行分隔，防止内容粘连。
+2. **目录结构校准**：根据您提供的截图（`src/scorpio` 和 `src/scorpio_app` 分离），修正了文件树结构，使其完全匹配您的真实项目路径。
+3. **美化排版**：使用了清晰的层级和图标，直接复制即可使用。
+
+请将以下内容**完全覆盖**您仓库根目录下的 `README.md` 文件。
+
+```markdown
 # 面向复杂动态环境的移动机器人多约束自主导航与任务调度系统
-# Autonomous Mobile Robot Multi-Constraint Navigation and Task Scheduling System
 
 ![ROS Version](https://img.shields.io/badge/ROS-Noetic-blue.svg) ![Platform](https://img.shields.io/badge/Platform-Scorpio_Robot-orange.svg) ![Language](https://img.shields.io/badge/Language-Python%20%7C%20C%2B%2B-green.svg) ![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
 
-> **中山大学智能工程学院“人工智能基础与进阶实训”**
+> **中山大学智能工程学院“人工智能基础与进阶实训”期末优秀项目 (满分通过)**
 > 
 > **小组名称**：智工小趴虎 (第二组)
 
@@ -25,51 +35,84 @@
 
 ```text
 src/
-├── scorpio/                      # 机器人底层控制与遥控功能包
-│   ├── scorpio_teleop/
-│   │   └── scripts/              
-│   │       ├── goal_pub_loop.py          # [核心] 任务调度状态机主程序
-│   │       ├── record_path.py            # [工具] 稀疏化变频录制脚本
-│   │       └── optimized_parking_path.py # [工具] 倒车路径四元数优化脚本
-│   └── ... 
-├── scorpio_app/                  # 机器人上层应用功能包
-│   ├── scorpio_navigation/       # 导航核心功能包
-│   │   ├── launch/
-│   │   │   ├── param/            # [配置] 代价地图与规划器参数
-│   │   │   │   ├── teb_local_planner_params.yaml
-│   │   │   │   └── costmap_common_params.yaml
-│   │   │   └── navigation.launch # 导航启动文件
-│   │   └── maps/                 # Cartographer 构建的高精度地图
-│   └── ... 
-└── ...
+├── scorpio/                          # [底层] 机器人底层控制与遥控功能包
+│   └── scorpio_teleop/
+│       └── scripts/              
+│           ├── goal_pub_loop.py          # [核心] 任务调度状态机主程序
+│           ├── record_path.py            # [工具] 稀疏化变频录制脚本
+│           └── optimized_parking_path.py # [工具] 倒车路径四元数优化脚本
+│
+├── scorpio_app/                      # [应用] 机器人上层应用功能包
+│   └── scorpio_navigation/           # 导航核心功能包
+│       ├── launch/
+│       │   ├── param/                # [配置] 代价地图与规划器核心参数
+│       │   │   ├── teb_local_planner_params.yaml
+│       │   │   └── costmap_common_params.yaml
+│       │   └── navigation.launch     # 导航启动入口
+│       └── maps/                     # Cartographer 构建的高精度地图
+│
+├── rrt_exploration/                  # [探索] RRT自主探索算法 (历史尝试版本)
+│
+└── README.md                         # 项目说明文档
 
+```
 
 ## 🚀 安装与运行 (Installation & Usage)
-1. 环境依赖
-Ubuntu 20.04
 
-ROS Noetic
+### 1. 环境依赖
 
-依赖包：move_base, teb_local_planner, robot_localization, cartographer_ros
+* **系统**：Ubuntu 20.04
+* **ROS版本**：ROS Noetic
+* **核心依赖**：
+```bash
+sudo apt-get install ros-noetic-move-base ros-noetic-teb-local-planner ros-noetic-robot-localization ros-noetic-cartographer-ros
 
-## 2. 编译
-Bash
-cd ~/scorpio_ws
+```
+
+
+
+### 2. 编译项目
+
+```bash
+cd ~/your_workspace
 catkin_make
 source devel/setup.bash
 
-## 3. 运行步骤
-步骤 1：启动底层驱动与导航栈
+```
 
-Bash
+### 3. 运行步骤
+
+**步骤 1：启动底层驱动与导航栈**
+此命令将启动底盘驱动、雷达、EKF定位及MoveBase节点。
+
+```bash
 roslaunch scorpio_navigation navigation.launch
-步骤 2：启动任务调度器 (开始自动导航)
 
-Bash
+```
+
+**步骤 2：启动任务调度器 (开始自动导航)**
+加载优化后的路径文件，开始执行从起点到终点的完整任务链。
+
+```bash
 # 确保已加载优化后的路径文件 (optimized_path.yaml)
 python3 src/scorpio/scorpio_teleop/scripts/goal_pub_loop.py nav
-（可选）步骤 0：录制新路径
 
-Bash
+```
+
+**（可选）步骤 0：录制新路径**
+如果您需要重新录制示教路径，请运行：
+
+```bash
 python3 src/scorpio/scorpio_teleop/scripts/goal_pub_loop.py record
-# 遥控机器人行驶，脚本将自动根据速度切换采样频率
+# 此时使用遥控器控制机器人行驶，脚本将根据速度自动切换采样频率
+
+```
+
+
+## 📄 许可证 (License)
+
+本项目采用 MIT 许可证。
+
+```
+
+```
