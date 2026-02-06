@@ -44,8 +44,7 @@ src/
 └── ...
 
 
-
-🚀 安装与运行 (Installation & Usage)
+## 🚀 安装与运行 (Installation & Usage)
 1. 环境依赖
 Ubuntu 20.04
 
@@ -53,12 +52,13 @@ ROS Noetic
 
 依赖包：move_base, teb_local_planner, robot_localization, cartographer_ros
 
-2. 编译
+## 2. 编译
 Bash
 cd ~/scorpio_ws
 catkin_make
 source devel/setup.bash
-3. 运行步骤
+
+## 3. 运行步骤
 步骤 1：启动底层驱动与导航栈
 
 Bash
