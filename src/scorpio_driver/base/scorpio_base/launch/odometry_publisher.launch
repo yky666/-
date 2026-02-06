@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<!--the car base-->
+<launch>
+  <node pkg="scorpio_base" type="odometry_publisher.py" name="odometry_publisher" output="screen"/>
+</launch>

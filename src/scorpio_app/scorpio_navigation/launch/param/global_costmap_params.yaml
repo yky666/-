@@ -1,0 +1,19 @@
+global_costmap:
+  global_frame: map
+  robot_base_frame: base_link
+  update_frequency: 1.0
+  publish_frequency: 0.5
+  static_map: true
+  transform_tolerance: 1.0
+
+  # Plugins configuration: Used to construct the layers of the global costmap
+  plugins:
+    - {name: static_layer,            type: "costmap_2d::StaticLayer"}
+    - {name: obstacle_layer,          type: "costmap_2d::VoxelLayer"}
+    - {name: inflation_layer,         type: "costmap_2d::InflationLayer"}
+
+  # Inflation layer configuration: Nested within the global_costmap (correct hierarchical structure)
+  inflation_layer:
+    enabled: true
+    cost_scaling_factor: 10.0 # Obstacle cost decay rate (exponential scaling)
+    inflation_radius: 0.00     # Obstacle inflation radius (expands obstacle boundaries for safety)

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--scorpio camera slam-->
+<!--scorpio技术讨论与反馈群：8346256-->
+<launch>
+  <!-- Arguments -->
+  <arg name="slam_methods" default="gmapping" doc="slam type [gmapping, cartographer, hector, karto, frontier_exploration]"/>
+  <arg name="configuration_basename" default="scorpio_lds_2d.lua"/>
+  <arg name="open_rviz" default="true"/>
+
+    <arg name="hall_encoder" default="true"/>
+    <arg name="model_red"     default="true" doc="red is for the student,silver is for the teacher"/> 
+	<arg name="laser_enable" default="false"/>
+    <include file="$(find scorpio_bringup)/launch/driver_bringup.launch">
+		<arg name="hall_encoder" value="$(arg hall_encoder)"/>
+		<arg name="model_red"  value="$(arg model_red)"/>
+		<arg name="laser_enable"  value="$(arg laser_enable)"/>
+    </include>
+    
+    <arg     if="$(arg model_red)" name="camera_type_tel"   default="astrapro"/>
+    <arg unless="$(arg model_red)" name="camera_type_tel"   default="d435"/>
+    <!-- Run the depthimage_to_laserscan node -->
+    <include file="$(find camera_driver_transfer)/launch/$(arg camera_type_tel)_p2s.launch">
+    </include>
+
+	  <!-- SLAM: Gmapping, Cartographer, Hector, Karto, Frontier_exploration, RTAB-Map -->
+	  <include file="$(find scorpio_slam)/launch/scorpio_$(arg slam_methods).launch">
+		<!--arg name="model" value="$(arg model)"/-->
+		<arg name="configuration_basename" value="$(arg configuration_basename)"/>
+	  </include>
+
+  	<!-- rviz -->
+  	<group if="$(arg open_rviz)"> 
+		<group if="$(arg model_red)"> 
+    		<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find scorpio_slam)/rviz/scorpio_$(arg slam_methods)_red.rviz"/>
+		</group>
+		<group unless="$(arg model_red)"> 
+    		<node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find scorpio_slam)/rviz/scorpio_$(arg slam_methods)_silver.rviz"/>
+		</group>
+	</group>
+
+</launch>
