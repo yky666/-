@@ -2,7 +2,7 @@
 
 ![ROS Version](https://img.shields.io/badge/ROS-Noetic-blue.svg) ![Platform](https://img.shields.io/badge/Platform-Scorpio_Robot-orange.svg) ![Language](https://img.shields.io/badge/Language-Python%20%7C%20C%2B%2B-green.svg) ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 
-> **中山大学智能工程学院“人工智能基础与进阶实训”期末优秀项目 (满分通过)**
+> **中山大学智能工程学院“人工智能基础与进阶实训”**
 > 
 > **小组名称**：智工小趴虎 (第二组)
 
@@ -10,7 +10,7 @@
 
 本项目针对天蝎座（Scorpio）移动机器人平台，设计并实现了一套在复杂物理环境下具备高鲁棒性的全自主导航系统。系统旨在解决**高速遥控竞速、大场景长走廊建图、坡道位姿估计、动态障碍物规避、定点精准启停及高精度倒车入库**等核心挑战。
 
-通过提出“**基于示教录制与轨迹优化 (Teach-and-Repeat with Optimization)**”的混合架构，结合 EKF 多传感器融合、Cartographer 图优化建图、TEB 局部规划器深度调优以及 Python 状态机调度，本系统在最终考核中实现了 **零失误、满分 (72/72)** 的优异成绩。
+通过提出“**基于示教录制与轨迹优化 (Teach-and-Repeat with Optimization)**”的混合架构，结合 EKF 多传感器融合、Cartographer 图优化建图、TEB 局部规划器深度调优以及 Python 状态机调度，本系统在最终考核中得到了较为优异的成绩。
 
 ## ✨ 核心功能 (Key Features)
 
